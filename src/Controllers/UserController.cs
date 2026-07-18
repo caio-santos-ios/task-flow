@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using to_do_list.src.Requests;
 using to_do_list.src.Shared.DTOs;
-using to_do_list.src.Shared.Utils;
 
 namespace to_do_list.src.Controllers
 {

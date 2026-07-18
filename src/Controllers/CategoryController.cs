@@ -18,10 +18,11 @@ namespace to_do_list.src.Controllers
         {
             string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var query = new Dictionary<string, StringValues>(Request.Query);
             if (!string.IsNullOrEmpty(userId))
             {
+                Dictionary<string, StringValues> query = new(Request.Query);
                 query["createdBy"] = userId;
+                Request.Query = new QueryCollection(query);
             }
             ResponseApi<PaginationApi<List<dynamic>>> response = await service.GetAllAsync(new(Request.Query));
             return StatusCode(response.StatusCode, response.Result);
@@ -33,10 +34,11 @@ namespace to_do_list.src.Controllers
         {
             string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var query = new Dictionary<string, StringValues>(Request.Query);
             if (!string.IsNullOrEmpty(userId))
             {
+                Dictionary<string, StringValues> query = new(Request.Query);
                 query["createdBy"] = userId;
+                Request.Query = new QueryCollection(query);
             }
             ResponseApi<List<dynamic>> response = await service.GetSelectAsync(new(Request.Query));
             return StatusCode(response.StatusCode, response.Result);

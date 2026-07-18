@@ -74,7 +74,9 @@ namespace to_do_list.src.Services
                     {
                         Title = "Nova Tarefa",
                         Description = $"O usuário {user.Name} criou uma nova tarefa",
-                        SendBy = user.Id
+                        SendBy = user.Id,
+                        Icon = "task",
+                        Link = $"tasks/{response.Data.Id}/details"
                     });
                 }
 

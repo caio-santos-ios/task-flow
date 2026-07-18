@@ -26,5 +26,11 @@ namespace to_do_list.src.Models
 
         [BsonElement("sendAt")]
         public DateTime SendAt { get; set; }
+
+        [BsonElement("link")]
+        public string Link { get; set; } = string.Empty;
+
+        [BsonElement("icon")]
+        public string Icon { get; set; } = string.Empty;
     }
 }

@@ -73,8 +73,8 @@ namespace to_do_list.src.Services
                     Name = request.Name,
                     Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
                     CodeAccess = access.CodeAccess,
-                    CodeAccessExpiration = null,
-                    ValidatedAccess = access.CodeAccessExpiration,
+                    CodeAccessExpiration = access.CodeAccessExpiration,
+                    ValidatedAccess = false,
                     Admin = request.Admin,
                     Phone = request.Phone
                 };
@@ -92,15 +92,15 @@ namespace to_do_list.src.Services
                     {
                         Title = "Novo Usuário",
                         Description = $"O Usuário {request.Name} cadastrou-se no TaskFLow",
-                        SendBy = userRecipient.Id
+                        SendBy = userRecipient.Id,
+                        Icon = "person"
                     });
                 }
 
                 return new(null, 201, "Usuário criado com sucesso.");
             }
-            catch(Exception ex)
+            catch
             {
-                System.Console.WriteLine(ex.Message);
                 return new(null, 500, $"Ocorreu um erro inesperado. Por favor, tente novamente mais tarde");
             }
         }
@@ -165,6 +165,7 @@ namespace to_do_list.src.Services
                 user.Data.UpdatedAt = DateTime.UtcNow;
                 user.Data.CodeAccessExpiration = null;
                 user.Data.CodeAccess = "";
+                user.Data.ValidatedAccess = true;
 
                 ResponseApi<User?> response = await repository.UpdateAsync(user.Data);
                 if (!response.IsSuccess) return new(null, 400, "Falha ao confirmar conta");
