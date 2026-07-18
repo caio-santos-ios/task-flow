@@ -8,6 +8,7 @@ using to_do_list.src.Repositories;
 using to_do_list.src.Works;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
+using CloudinaryDotNet;
 
 namespace to_do_list.src.Configuration
 {
@@ -16,7 +17,7 @@ namespace to_do_list.src.Configuration
         public static void AddBuilderConfiguration(this WebApplicationBuilder builder)
         {
             AppDbContext.ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? "";
-            AppDbContext.DatabaseName     = Environment.GetEnvironmentVariable("DATABASE_NAME")     ?? "";
+            AppDbContext.DatabaseName = Environment.GetEnvironmentVariable("DATABASE_NAME") ?? "";
             AppDbContext.IsSSL = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("IS_SSL"))
                 && Convert.ToBoolean(Environment.GetEnvironmentVariable("IS_SSL"));
         }
@@ -62,6 +63,14 @@ namespace to_do_list.src.Configuration
             builder.Services.AddHostedService<PushNotificationWork>();
 
             builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
+            
+            // CLOUDINARY
+            Account account = new(
+                Environment.GetEnvironmentVariable("CLOUDINARY_CLOUD_NAME"),
+                Environment.GetEnvironmentVariable("CLOUDINARY_API_KEY"),
+                Environment.GetEnvironmentVariable("CLOUDINARY_API_SECRET")
+            );
+            builder.Services.AddSingleton(new Cloudinary(account));
         }
     }
 }

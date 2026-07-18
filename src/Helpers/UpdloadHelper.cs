@@ -1,10 +1,55 @@
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using SixLabors.ImageSharp;
+
 namespace to_do_list.src.Helpers
 {
-    public class UploadHelper
+    public class UploadHelper(Cloudinary cloudinary)
     {
         private readonly string ApiUri = Environment.GetEnvironmentVariable("API_URI") ?? "";
 
         public async Task<string> SaveFileAsync(IFormFile file)
+        {
+            try
+            {
+                string extension = Path.GetExtension(file.FileName).ToLower();
+                bool isHeic = extension == ".heic" || extension == ".heif";
+                string fileName = Guid.NewGuid().ToString();
+
+                using var memoryStream = new MemoryStream();
+
+                if (isHeic)
+                {
+                    using var inputStream = file.OpenReadStream();
+                    using var image = await Image.LoadAsync(inputStream);
+                    await image.SaveAsJpegAsync(memoryStream);
+                    memoryStream.Position = 0;
+                    extension = ".jpg";
+                }
+                else
+                {
+                    await file.CopyToAsync(memoryStream);
+                    memoryStream.Position = 0;
+                }
+
+                var uploadParams = new RawUploadParams
+                {
+                    File = new FileDescription(fileName + extension, memoryStream),
+                    Folder = "task-flow/users",
+                    PublicId = fileName
+                };
+
+                RawUploadResult result = await cloudinary.UploadAsync(uploadParams);
+
+                return result.SecureUrl.ToString();
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public async Task<string> SaveFileV1Async(IFormFile file)
         {
             try
             {
