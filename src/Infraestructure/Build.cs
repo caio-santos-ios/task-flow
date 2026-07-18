@@ -25,7 +25,7 @@ namespace to_do_list.src.Configuration
         {
             if (FirebaseApp.DefaultInstance == null)
             {
-                var credentialsPath = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS_PATH") ?? "";
+                string credentialsPath = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS_PATH") ?? "";
 
                 FirebaseApp.Create(new AppOptions
                 {

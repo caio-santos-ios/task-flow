@@ -1,7 +1,5 @@
 using to_do_list.src.Interfaces;
 using to_do_list.src.Models.Base;
-using to_do_list.src.Shared.DTOs;
-using to_do_list.src.Shared.Utils;
 
 namespace to_do_list.src.Services
 {
@@ -9,19 +7,11 @@ namespace to_do_list.src.Services
         IDashboardRepository repository
     ) : IDashboardService
     {
-        public async Task<ResponseApi<dynamic>> GetAllAsync(GetAllDTO request)
+        public async Task<ResponseApi<dynamic>> GetAllAsync(string userId)
         {
             try
             {
-                PaginationUtil<dynamic> pagination = new(request.QueryParams);
-                ResponseApi<dynamic> data = await repository.GetAllAsync(pagination);
-                // dynamic data = new
-                // {
-                //     today = 0,
-                //     doing = 0,
-                //     late = 0,
-                //     finish = 0
-                // };
+                ResponseApi<dynamic> data = await repository.GetAllAsync(userId);
 
                 return new(data.Data, 200, "Dashboard listados com sucesso");
             }

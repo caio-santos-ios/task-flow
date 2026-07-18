@@ -5,6 +5,6 @@ namespace to_do_list.src.Interfaces
 {
     public interface IDashboardRepository
     {
-        Task<ResponseApi<dynamic>> GetAllAsync(PaginationUtil<dynamic> pagination);
+        Task<ResponseApi<dynamic>> GetAllAsync(string userId);
     }
 }

@@ -7,6 +7,6 @@ namespace to_do_list.src.Interfaces
 {
     public interface IDashboardService
     {
-        Task<ResponseApi<dynamic>> GetAllAsync(GetAllDTO request);
+        Task<ResponseApi<dynamic>> GetAllAsync(string userId);
     }
 }
