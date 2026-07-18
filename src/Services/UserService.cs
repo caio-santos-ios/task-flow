@@ -97,8 +97,9 @@ namespace to_do_list.src.Services
 
                 return new(null, 201, "Usuário criado com sucesso.");
             }
-            catch
+            catch(Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
                 return new(null, 500, $"Ocorreu um erro inesperado. Por favor, tente novamente mais tarde");
             }
         }
