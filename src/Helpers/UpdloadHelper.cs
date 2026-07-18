@@ -8,7 +8,7 @@ namespace to_do_list.src.Helpers
     {
         private readonly string ApiUri = Environment.GetEnvironmentVariable("API_URI") ?? "";
 
-        public async Task<string> SaveFileAsync(IFormFile file)
+        public async Task<string> SaveFileV1Async(IFormFile file)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace to_do_list.src.Helpers
             }
         }
 
-        public async Task<string> SaveFileV1Async(IFormFile file)
+        public async Task<string> SaveFileAsync(IFormFile file)
         {
             try
             {

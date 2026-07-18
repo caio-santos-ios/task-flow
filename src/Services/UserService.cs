@@ -72,10 +72,11 @@ namespace to_do_list.src.Services
                     Email = request.Email,
                     Name = request.Name,
                     Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                    CodeAccess = "",
+                    CodeAccess = access.CodeAccess,
                     CodeAccessExpiration = null,
-                    ValidatedAccess = true,
+                    ValidatedAccess = access.CodeAccessExpiration,
                     Admin = request.Admin,
+                    Phone = request.Phone
                 };
 
                 ResponseApi<User?> response = await repository.CreateAsync(user);
